@@ -82,7 +82,7 @@ file-based exclusion list functions as though it were passed in with
 ``--exclude-dir-file=``.
 
 Pynose Configuration Files
-========================
+==========================
 
 ``pynose-exclude`` options can also be passed to ``pynose`` using a ``.pynoserc`` or ``pynose.cfg`` file. If you more than one directory are to be excluded
 separate their values with newlines using the same configuration key: ::

@@ -12,7 +12,7 @@ setup(
     name="pynose-exclude",
     version=VERSION,
     author="Nyefan",
-    author_email="pynose@nyefan.org",
+    author_email="pynose-exclude@nyefan.org",
     description="Exclude specific directories from pynose runs.",
     long_description=read('README.rst'),
     license='GNU LGPL',

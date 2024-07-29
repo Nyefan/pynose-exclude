@@ -1,26 +1,22 @@
-# Multiprocessing handling to avoid atexit test runner failure
-try:
-    import multiprocessing
-except ImportError:
-    pass
 import os
-from setuptools import setup
+from setuptools import setup  # type: ignore
 
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read().strip()
 
-VERSION = '0.5.0'
+
+VERSION = '1.0.0'
 
 setup(
-    name="nose-exclude",
+    name="pynose-exclude",
     version=VERSION,
-    author="Kurt Grandis",
-    author_email="kgrandis@gmail.com",
-    description="Exclude specific directories from nosetests runs.",
+    author="Nyefan",
+    author_email="pynose@nyefan.org",
+    description="Exclude specific directories from pynose runs.",
     long_description=read('README.rst'),
     license='GNU LGPL',
-    url="https://github.com/kgrandis/nose-exclude",
+    url="https://github.com/nyefan/pynose-exclude",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
@@ -30,12 +26,11 @@ setup(
         "Programming Language :: Python",
         ],
 
-    py_modules=['nose_exclude'],
+    py_modules=['pynose_exclude'],
     zip_safe=False,
 
     entry_points={
-        'nose.plugins': ['nose_exclude = nose_exclude:NoseExclude']
+        'pynose.plugins': ['pynose_exclude = pynose_exclude:PynoseExclude']
         },
-    install_requires=['nose'],
-    test_suite='tests',
+    install_requires=['pynose']
 )

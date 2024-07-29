@@ -1,10 +1,10 @@
 Overview
 ========
 
-nose-exclude is a `Nose`_ plugin that allows you to easily specify
+pynose-exclude is a `Pynose`_ plugin that allows you to easily specify
 directories to be excluded from testing.
 
-.. _Nose: http://somethingaboutorange.com/mrl/projects/nose
+.. _Pynose: https://github.com/mdmintz/pynose
 
 
 Exclude Directories
@@ -16,7 +16,7 @@ from testing. The directory paths provided may be absolute or relative.
 
 Example::
 
-    $ nosetests --exclude-dir=test_dirs/build \
+    $ pynose --exclude-dir=test_dirs/build \
         --exclude-dir=test_dirs/test_not_me test_dirs
     ....
     ----------------------------------------------------------------------
@@ -25,18 +25,18 @@ Example::
     OK
 
 This example will exclude the directories test_dirs/build and
-test_dirs/test_not_me from nosetests' test searching.
+test_dirs/test_not_me from pynose' test searching.
 
 Using File-Based Exclusion List
 -------------------------------
 
 The ``--exclude-dir-file=`` option can be used to pass in a predefined
-list of directories contained within a file. ``nose-exclude`` expects each
+list of directories contained within a file. ``pynose-exclude`` expects each
 directory to be excluded to be on its own line.
 
 Example::
 
-    $ nosetests --exclude-dir-file=test_dirs/exclude_dirs.txt \
+    $ pynose --exclude-dir-file=test_dirs/exclude_dirs.txt \
         test_dirs
     ....
     ----------------------------------------------------------------------
@@ -75,16 +75,16 @@ Using Environment Variables
 ---------------------------
 
 ``--exclude-dir=`` and ``--exclude-test=`` can be set by the environment
-variables ``NOSE_EXCLUDE_DIRS`` and ``NOSE_EXCLUDE_TESTS`` respectively.
+variables ``PYNOSE_EXCLUDE_DIRS`` and ``PYNOSE_EXCLUDE_TESTS`` respectively.
 Multiple exclude paths may be entered by separating them using a ``;``. The
-environment variable ``NOSE_EXCLUDE_DIRS_FILE`` when set to the path of a
+environment variable ``PYNOSE_EXCLUDE_DIRS_FILE`` when set to the path of a
 file-based exclusion list functions as though it were passed in with
 ``--exclude-dir-file=``.
 
-Nose Configuration Files
+Pynose Configuration Files
 ========================
 
-``nose-exclude`` options can also be passed to ``nosetests`` using a ``.noserc`` or ``nose.cfg`` file. If you more than one directory are to be excluded 
+``pynose-exclude`` options can also be passed to ``pynose`` using a ``.pynoserc`` or ``pynose.cfg`` file. If you more than one directory are to be excluded
 separate their values with newlines using the same configuration key: ::
 
     [nosetests]
@@ -95,6 +95,6 @@ separate their values with newlines using the same configuration key: ::
 
 Bugs
 ====
-Please report all bugs (and patches) to https://github.com/kgrandis/nose-exclude/
+Please report all bugs (and patches) to https://github.com/nyefan/pynose-exclude/
 
 NOTE: The previous bitbucket repository is no longer actively maintained.

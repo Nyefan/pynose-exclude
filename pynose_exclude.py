@@ -1,32 +1,27 @@
 from __future__ import unicode_literals
 
-import sys
-import os
 import logging
-from nose.plugins import Plugin
+import os
 
-log = logging.getLogger('nose.plugins.nose_exclude')
+from nose.plugins import Plugin  # type: ignore
 
-if sys.version_info > (3,):
-    get_method_class = lambda x: x.__self__.__class__
-else:
-    get_method_class = lambda x: x.im_class
+log = logging.getLogger('pynose.plugins.pynose_exclude')
 
 
-class NoseExclude(Plugin):
+class PynoseExclude(Plugin):
 
     def options(self, parser, env=os.environ):
         """Define the command line options for the plugin."""
-        super(NoseExclude, self).options(parser, env)
+        super(PynoseExclude, self).options(parser, env)
         env_dirs = []
         env_tests = []
 
-        if 'NOSE_EXCLUDE_DIRS' in env:
-            exclude_dirs = env.get('NOSE_EXCLUDE_DIRS', '')
+        if 'PYNOSE_EXCLUDE_DIRS' in env:
+            exclude_dirs = env.get('PYNOSE_EXCLUDE_DIRS', '')
             env_dirs.extend(exclude_dirs.split(';'))
 
-        if 'NOSE_EXCLUDE_TESTS' in env:
-            exclude_tests = env.get('NOSE_EXCLUDE_TESTS', '')
+        if 'PYNOSE_EXCLUDE_TESTS' in env:
+            exclude_tests = env.get('PYNOSE_EXCLUDE_TESTS', '')
             env_tests.extend(exclude_tests.split(';'))
 
         parser.add_option(
@@ -36,16 +31,16 @@ class NoseExclude(Plugin):
             help="Directory to exclude from test discovery. \
                 Path can be relative to current working directory \
                 or an absolute path. May be specified multiple \
-                times. [NOSE_EXCLUDE_DIRS]")
+                times. [PYNOSE_EXCLUDE_DIRS]")
 
         parser.add_option(
             str("--exclude-dir-file"), type="string",
             dest="exclude_dir_file",
-            default=env.get('NOSE_EXCLUDE_DIRS_FILE', False),
+            default=env.get('PYNOSE_EXCLUDE_DIRS_FILE', False),
             help="A file containing a list of directories to exclude \
                 from test discovery. Paths can be relative to current \
                 working directory or an absolute path. \
-                [NOSE_EXCLUDE_DIRS_FILE]")
+                [PYNOSE_EXCLUDE_DIRS_FILE]")
 
         parser.add_option(
             str("--exclude-test"), action="append",
@@ -61,7 +56,8 @@ class NoseExclude(Plugin):
             help="A file containing a list of fully qualified names of \
                 test methods or classes to exclude from test discovery.")
 
-    def _force_to_abspath(self, pathname, root):
+    @staticmethod
+    def _force_to_abspath(pathname, root):
         if os.path.isabs(pathname):
             abspath = pathname
         else:
@@ -72,15 +68,16 @@ class NoseExclude(Plugin):
         else:
             log.warning('The following path was not found: %s' % pathname)
 
-    def _load_from_file(self, filename):
+    @staticmethod
+    def _load_from_file(filename):
         with open(filename, 'r') as infile:
-            new_list = [l.strip() for l in infile.readlines() if l.strip()
-                        and not l.startswith('#')]
+            new_list = [line.strip() for line in infile.readlines() if line.strip()
+                        and not line.startswith('#')]
         return new_list
 
     def configure(self, options, conf):
         """Configure plugin based on command line options"""
-        super(NoseExclude, self).configure(options, conf)
+        super(PynoseExclude, self).configure(options, conf)
 
         self.exclude_dirs = {}
         self.exclude_tests = options.exclude_tests[:]
@@ -103,7 +100,7 @@ class NoseExclude(Plugin):
 
         self.enabled = True
         if conf and conf.workingDir:
-            # Use nose's working directory
+            # Use pynose's working directory
             root = conf.workingDir
         else:
             root = os.getcwd()
@@ -152,7 +149,7 @@ class NoseExclude(Plugin):
     def wantMethod(self, meth):
         """Filter out tests based on <module path>.<class>.<method name>"""
         try:
-            cls = get_method_class(meth)
+            cls = meth.__self__.__class__
         except AttributeError:
             return None
 

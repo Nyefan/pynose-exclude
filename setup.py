@@ -6,7 +6,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read().strip()
 
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 setup(
     name="pynose-exclude",
@@ -18,7 +18,7 @@ setup(
     license='GNU LGPL',
     url="https://github.com/nyefan/pynose-exclude",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         ("License :: OSI Approved :: GNU Library or Lesser General "
          "Public License (LGPL)"),
@@ -30,7 +30,7 @@ setup(
     zip_safe=False,
 
     entry_points={
-        'pynose.plugins': ['pynose_exclude = pynose_exclude:PynoseExclude']
+        'nose.plugins': ['pynose_exclude = pynose_exclude:PynoseExclude']
         },
     install_requires=['pynose']
 )
